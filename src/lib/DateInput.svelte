@@ -57,17 +57,37 @@
 	/** Format string */
 	export let format = 'yyyy-MM-dd HH:mm:ss'
 	let formatTokens = createFormat(format)
-	$: formatTokens = createFormat(format)
-
 	/** Locale object for internationalization */
 	export let locale: Locale = {}
+	/** Whether the date popup is visible */
+	export let visible = false
+	/** Close the date popup when a date is selected */
+	export let closeOnSelection: {
+    all?: boolean,
+    day?: boolean,
+    month?: boolean,
+    year?: boolean
+  } = {}
+	/** Wait with updating the date until a date is selected */
+	export let browseWithoutSelecting = false
+	/** Show a time picker with the specified precision */
+	export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
+	export let text = toText($store, formatTokens)
+	/** Automatically adjust date popup position to not appear outside the screen */
+	export let dynamicPositioning = false
+
+	let InputElement: HTMLInputElement
+	let pickerElement: HTMLElement | null
+	let showAbove = false
+	let pickerLeftPosition: number | null = null
+
+	$: formatTokens = createFormat(format)
+	$: valueUpdate($store, formatTokens)
+	$: textUpdate(text, formatTokens)
 
 	function valueUpdate(value: Date | null, formatTokens: FormatToken[]) {
 		text = toText(value, formatTokens)
 	}
-	$: valueUpdate($store, formatTokens)
-
-	export let text = toText($store, formatTokens)
 
 	function textUpdate(text: string, formatTokens: FormatToken[]) {
 		if (text.length) {
@@ -87,22 +107,6 @@
 			}
 		}
 	}
-	$: textUpdate(text, formatTokens)
-
-	/** Whether the date popup is visible */
-	export let visible = false
-	/** Close the date popup when a date is selected */
-	export let closeOnSelection: {
-    all?: boolean,
-    day?: boolean,
-    month?: boolean,
-    year?: boolean
-  } = {}
-	/** Wait with updating the date until a date is selected */
-	export let browseWithoutSelecting = false
-
-	/** Show a time picker with the specified precision */
-	export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
 
 	// handle on:focusout for parent element. If the parent element loses
 	// focus (e.g input element), visible is set to false
@@ -145,14 +149,6 @@
       }
 		}
 	}
-
-	/** Automatically adjust date popup position to not appear outside the screen */
-	export let dynamicPositioning = false
-
-	let InputElement: HTMLInputElement
-	let pickerElement: HTMLElement | null
-	let showAbove = false
-	let pickerLeftPosition: number | null = null
 
 	function setDatePickerPosition() {
 		// Defaults

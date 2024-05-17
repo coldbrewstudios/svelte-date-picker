@@ -123,7 +123,7 @@
     })
 	}
 
-	function setMonth(newMonth: number) {
+	function setMonth(newMonth: number, viaButton?: boolean) {
 		let newYear = browseDate.getFullYear()
 		if (newMonth === 12) {
 			newMonth = 0
@@ -148,10 +148,12 @@
 			)
 		)
 
-    dispatch('change', {
-      value: browseDate,
-      changed: 'month'
-    })
+    if (!viaButton) {
+      dispatch('change', {
+        value: browseDate,
+        changed: 'month'
+      })
+    }
 	}
 
 	function selectDay(calendarDay: CalendarDay) {
@@ -270,7 +272,7 @@
 				type="button"
 				class="page-button"
 				tabindex="-1"
-				on:click={() => setMonth(browseDate.getMonth() - 1)}
+				on:click={() => setMonth(browseDate.getMonth() - 1, true)}
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 					><path
@@ -284,7 +286,7 @@
           name="month"
 					value={browseMonth}
 					on:keydown={monthKeydown}
-					on:input={(e) => setMonth(parseInt(e.currentTarget.value))}
+					on:input={(e) => setMonth(parseInt(e.currentTarget.value), true)}
 				>
 					{#each iLocale.months as monthName, i}
 						<option
