@@ -7,13 +7,12 @@
 
 Date and time picker for Svelte
 
-Features:
-- Theming
-- Custom formats
-- Internationalization (i18n)
-- Autopunctuation (e.g typing "20201111111111" gives you "2020-11-11 11:11:11" with the default format)
-- Keyboard shortcuts
+This is an adaptation from [date-picker-svelte](https://www.npmjs.com/package/date-picker-svelte).
+* Expanding `closeOnSelection` to be an object so user can choose which actions to close on (day, month, year)
+* Expanding `on:change` event to be an object that includes the date and which field was just change (day, month, year)
+* Updating `on:change` to fire on every change that happens in the picker (the original version did not fire change on year and month changes)
 
+Goes to original packages demo:   
 [Demo](https://date-picker-svelte.kasper.space/demo) • [Documentation](https://date-picker-svelte.kasper.space/docs) • [REPL](https://svelte.dev/repl/044911429c4b4e659362518d9a5deaae?version=4)
 
 ![](Screenshot.png)
@@ -45,30 +44,40 @@ npm i @gregg-cbs/svelte-date-picker
   }
 </script>
 
-<!-- Props
-	/** Date value. It's `null` if no date is selected */
-	value: Date | null = null
-
-	/** Show a time picker with the specified precision */
-	timePrecision: 'minute' | 'second' | 'millisecond' | null = null
-
-	/** The earliest year the user can select */
-	min = new Date(defaultDate.getFullYear() - 20, 0, 1)
-
-	/** The latest year the user can select */
-	max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
-
-  /** Wait with updating the date until a date is selected */
-	browseWithoutSelecting = false
-
-  /** Locale object for internationalization */
-  locale: Locale = {}
- -->
-<!-- input that shows datepicker (wraps the DatePicker for you) -->
+<!-- input that shows datepicker when clicked on (wraps the DatePicker for you) -->
 <DateInput 
   bind:value={date} 
 />
   
+<!-- 
+DateInput Props
+
+/** Format string */
+format = 'yyyy-MM-dd HH:mm:ss' 
+
+/** Locale object for internationalization */
+locale: Locale = {}
+
+/** Whether the date popup is visible */
+visible = false
+
+/** Close the date popup when a date is selected */
+closeOnSelection: {
+  day?: boolean,
+  month?: boolean,
+  year?: boolean
+}
+
+/** Wait with updating the date until a date is selected */
+browseWithoutSelecting = false
+
+/** Show a time picker with the specified precision */
+timePrecision: 'minute' | 'second' | 'millisecond' | null = null
+
+/** Automatically adjust date popup position to not appear outside the screen */
+dynamicPositioning = false
+-->
+
 <!-- standalone date picker/calendar so you can do your own thing -->
 <DatePicker 
   value={value}
@@ -76,6 +85,29 @@ npm i @gregg-cbs/svelte-date-picker
   max={maxDate}
   on:change={onChange}
 />
+
+<!-- 
+  DatePicker Props
+
+	/** Date value. It's `null` if no date is selected */
+	value: Date | null
+
+	/** Show a time picker with the specified precision */
+	timePrecision: 'minute' | 'second' | 'millisecond' | null 
+
+	/** The earliest year the user can select */
+	min: Date | null
+
+	/** The latest year the user can select */
+	max: Date | null
+
+  /** Wait with updating the date until a date is selected */
+	browseWithoutSelecting = false
+
+  /** Locale object for internationalization */
+  locale: Locale = {}
+ -->
+
 
 <!-- you can also bind value but a note that this will fire a change when the component mounts -->
 <DatePicker 
