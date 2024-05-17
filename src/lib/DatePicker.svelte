@@ -3,6 +3,7 @@
 	import { getMonthLength, getCalendarDays, type CalendarDay } from './date-utils.js'
 	import { getInnerLocale, type Locale } from './locale.js'
 	import { createEventDispatcher } from 'svelte'
+  import type {DatePickerDispatchType} from './types.ts'
 
 	const todayDate = new Date()
 	/** Default Date to use */
@@ -37,9 +38,7 @@
 		setValue(min)
 	}
 
-	const dispatch = createEventDispatcher<{
-		change: Date
-	}>()
+	const dispatch = createEventDispatcher<DatePickerDispatchType>()
 
 	function cloneDate(d: Date) {
 		return new Date(d.getTime())
@@ -118,7 +117,10 @@
 	function setYear(newYear: number) {
 		browseDate.setFullYear(newYear)
 		browse(browseDate)
-    dispatch('change', browseDate)
+    dispatch('change', {
+      value: browseDate,
+      changed: 'year'
+    })
 	}
 
 	function setMonth(newMonth: number) {
@@ -146,7 +148,10 @@
 			)
 		)
 
-    dispatch('change', browseDate)
+    dispatch('change', {
+      value: browseDate,
+      changed: 'month'
+    })
 	}
 
 	function selectDay(calendarDay: CalendarDay) {
@@ -158,7 +163,10 @@
 			browseDate.setMonth(calendarDay.month)
 			browseDate.setDate(calendarDay.number)
 			setValueDate(browseDate)
-			dispatch('change', cloneDate(browseDate))
+			dispatch('change', {
+        value: cloneDate(browseDate),
+        changed: 'day'
+      })
 		}
 	}
 	function dayIsInRange(calendarDay: CalendarDay, min: Date, max: Date) {
@@ -242,7 +250,10 @@
 			setValueDate(browseDate)
 		} else if (e.key === 'Enter') {
 			setValue(browseDate)
-			dispatch('change', cloneDate(browseDate))
+      dispatch('change', {
+        value: cloneDate(browseDate),
+        changed: 'day'
+      })
 		} else {
 			return
 		}

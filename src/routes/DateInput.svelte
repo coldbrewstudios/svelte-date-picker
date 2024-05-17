@@ -12,7 +12,11 @@
 	let visible: boolean
 	let disabled: boolean
 	let required: boolean
-	let closeOnSelection: boolean
+	let closeOnSelection = {
+    day: true,
+    month: false,
+    year: false
+  }
 	let browseWithoutSelecting: boolean
 	let format: string
 	let dynamicPositioning: boolean = true
@@ -50,7 +54,20 @@
 		<Prop label="visible" bind:value={visible} />
 		<Prop label="disabled" bind:value={disabled} />
 		<Prop label="required" bind:value={required} />
-		<Prop label="closeOnSelection" bind:value={closeOnSelection} />
+		<div style="margin: 20px auto">
+      <Prop 
+        label="closeOnSelection.day" 
+        bind:value={closeOnSelection.day}
+      />
+      <Prop 
+        label="closeOnSelection.month" 
+        bind:value={closeOnSelection.month}
+      />
+      <Prop 
+        label="closeOnSelection.year" 
+        bind:value={closeOnSelection.year}
+      />
+    </div>
 		<Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
 		<Prop label="dynamicPositioning" bind:value={dynamicPositioning} />
 		<Prop label="locale">Default</Prop>

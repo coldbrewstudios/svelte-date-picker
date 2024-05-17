@@ -39,7 +39,9 @@ npm i @gregg-cbs/svelte-date-picker
   maxDate.setFullYear(2026)
 
   function onChange(e) {
-    date = e.detail;
+    date = e.detail.value; // value is always a date
+    // e.detail.changed tells you whether day, month or year was changed so you can
+    // have side effects on these actions if you want
   }
 </script>
 
@@ -63,7 +65,9 @@ npm i @gregg-cbs/svelte-date-picker
   locale: Locale = {}
  -->
 <!-- input that shows datepicker (wraps the DatePicker for you) -->
-<DateInput bind:value={date} />
+<DateInput 
+  bind:value={date} 
+/>
   
 <!-- standalone date picker/calendar so you can do your own thing -->
 <DatePicker 

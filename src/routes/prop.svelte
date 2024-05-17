@@ -8,6 +8,7 @@
 	$: if (value instanceof Object) {
 		jsonValue = JSON.stringify(value)
 	}
+
 	function jsonInput() {
 		try {
 			value = JSON.parse(jsonValue)

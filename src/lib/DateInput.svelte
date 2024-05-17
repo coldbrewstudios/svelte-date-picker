@@ -7,11 +7,9 @@
 	import DateTimePicker from './DatePicker.svelte'
 	import { writable } from 'svelte/store'
 	import { createEventDispatcher } from 'svelte'
+  import type {DatePickerDispatchType, DatePickerChangeEvent} from './types.ts'
 
-	const dispatch = createEventDispatcher<{
-		/** Fires when the user selects a new value in the DatePicker by clicking on a date or by pressing enter */
-		change: Date
-	}>()
+	const dispatch = createEventDispatcher<DatePickerDispatchType>()
 
 	/** Default date to display in picker before value is assigned */
 	const defaultDate = new Date()
@@ -94,7 +92,12 @@
 	/** Whether the date popup is visible */
 	export let visible = false
 	/** Close the date popup when a date is selected */
-	export let closeOnSelection = false
+	export let closeOnSelection: {
+    all?: boolean,
+    day?: boolean,
+    month?: boolean,
+    year?: boolean
+  } = {}
 	/** Wait with updating the date until a date is selected */
 	export let browseWithoutSelecting = false
 
@@ -128,10 +131,18 @@
 		}
 	}
 
-	function onSelect(e: CustomEvent<Date>) {
-		dispatch('change', e.detail)
+	function onChange(e: DatePickerChangeEvent) {
+    dispatch('change', e.detail);
+    console.log(e.detail);
+    
 		if (closeOnSelection) {
-			visible = false
+      if (
+        e.detail.changed === "day" && closeOnSelection.day ||
+        e.detail.changed === "month" && closeOnSelection.month || 
+        e.detail.changed === "year" && closeOnSelection.year
+      ) {
+        visible = false
+      }
 		}
 	}
 
@@ -226,7 +237,7 @@
 		>
 			<DateTimePicker
 				on:focusout={onFocusOut}
-				on:select={onSelect}
+				on:change={onChange}
 				bind:value={$store}
 				{min}
 				{max}
