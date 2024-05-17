@@ -286,7 +286,7 @@
           name="month"
 					value={browseMonth}
 					on:keydown={monthKeydown}
-					on:input={(e) => setMonth(parseInt(e.currentTarget.value), true)}
+					on:input={(e) => setMonth(parseInt(e.currentTarget.value))}
 				>
 					{#each iLocale.months as monthName, i}
 						<option
@@ -337,7 +337,7 @@
 				type="button"
 				class="page-button"
 				tabindex="-1"
-				on:click={() => setMonth(browseDate.getMonth() + 1)}
+				on:click={() => setMonth(browseDate.getMonth() + 1, true)}
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 					><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg
