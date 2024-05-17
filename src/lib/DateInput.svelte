@@ -10,7 +10,7 @@
 
 	const dispatch = createEventDispatcher<{
 		/** Fires when the user selects a new value in the DatePicker by clicking on a date or by pressing enter */
-		select: Date
+		change: Date
 	}>()
 
 	/** Default date to display in picker before value is assigned */
