@@ -1,16 +1,18 @@
 <script lang="ts">
 	import DatePicker from '$lib/DatePicker.svelte'
-	import { localeFromDateFnsLocale } from '$lib/locale.js'
 	import Prop from './prop.svelte'
 	import Split from './split.svelte'
 
+	import { localeFromDateFnsLocale } from '$lib/locale.js'
 	// had to import it this way to avoid errors
 	// in `npm run build:site` or `npm run check`:
 	// import hy from 'date-fns/locale/hy/index.js'
+  import enGB from 'date-fns/locale/hy/index.js'
+
 	let value: Date = new Date()
 	let min: Date
 	let max: Date
-	// let locale = localeFromDateFnsLocale(hy)
+	let locale = localeFromDateFnsLocale(enGB)
 	let browseWithoutSelecting: boolean
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = 'millisecond'
 </script>
@@ -22,7 +24,8 @@
       bind:min 
       bind:max 
       bind:browseWithoutSelecting 
-      {timePrecision} 
+      {timePrecision}
+      {locale}
     />
 	</div>
 	<div slot="right">
