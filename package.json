@@ -1,5 +1,5 @@
 {
-	"name": "svelte-date-picker",
+	"name": "@gregg-cbs/svelte-date-picker",
 	"version": "2.12.0",
 	"description": "Date and time picker for Svelte",
 	"type": "module",
@@ -104,17 +104,17 @@
 		}
 	},
 	"license": "MIT",
-	"homepage": "https://date-picker-svelte.kasper.space",
+	"homepage": "https://github.com/coldbrewstudios",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/probablykasper/date-picker-svelte.git"
+		"url": "git+https://github.com/coldbrewstudios/svelte-date-picker"
 	},
 	"bugs": {
-		"url": "https://github.com/probablykasper/date-picker-svelte/issues"
+		"url": "https://github.com/coldbrewstudios/svelte-date-picker/issues"
 	},
 	"author": {
-		"name": "Kasper Henningsen",
-		"url": "https://kasper.space"
+		"name": "Kasper Henningsen (modified by Gregg Ord-Hume)",
+		"url": "https://github.com/gregg-cbs"
 	},
 	"keywords": [
 		"date",

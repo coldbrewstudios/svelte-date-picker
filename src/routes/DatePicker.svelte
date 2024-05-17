@@ -18,11 +18,11 @@
 <Split>
 	<div class="left" slot="left">
 		<DatePicker 
-    bind:value={value}
-    bind:min 
-    bind:max 
-    bind:browseWithoutSelecting 
-    {timePrecision} 
+      bind:value={value}
+      bind:min 
+      bind:max 
+      bind:browseWithoutSelecting 
+      {timePrecision} 
     />
 	</div>
 	<div slot="right">

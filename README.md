@@ -1,9 +1,9 @@
 # Date Picker Svelte
 
-[![NPM](https://img.shields.io/npm/v/date-picker-svelte.svg)](https://npmjs.com/package/date-picker-svelte)
-[![License](https://img.shields.io/npm/l/date-picker-svelte.svg)](LICENSE)
-[![NPM Downloads](https://img.shields.io/npm/dm/date-picker-svelte.svg)](https://npmjs.com/package/date-picker-svelte)
-[![test](https://github.com/probablykasper/date-picker-svelte/actions/workflows/test.yml/badge.svg)](https://github.com/probablykasper/date-picker-svelte/actions/workflows/test.yml)
+[![NPM](https://img.shields.io/npm/v/%40gregg-cbs%2Fsvelte-date-picker)](https://npmjs.com/package/@gregg-cbs/svelte-date-picker)
+[![License](https://img.shields.io/npm/l/%40gregg-cbs%2Fsvelte-date-picker.svg)](LICENSE)
+[![NPM Downloads](https://img.shields.io/npm/dm/%40gregg-cbs%2Fsvelte-date-picker.svg)](https://npmjs.com/package/@gregg-cbs/svelte-date-picker)
+[![test](https://github.com/coldbrewstudios/svelte-date-picker/actions/workflows/test.yml/badge.svg)](https://github.com/coldbrewstudios/svelte-date-picker/actions/workflows/test.yml)
 
 Date and time picker for Svelte
 
@@ -21,18 +21,64 @@ Features:
 ## Install
 
 ```
-npm install date-picker-svelte
+npm i @gregg-cbs/svelte-date-picker
 ```
 
 ## Usage
 
 ```svelte
 <script>
-	import { DateInput } from 'date-picker-svelte'
-	let date = new Date()
+  import { DateInput, DatePicker } from 'date-picker-svelte'
+
+  let date = new Date()
+
+  const minDate = new Date()
+  minDate.setFullYear(2020)
+
+  const maxDate = new Date()
+  maxDate.setFullYear(2026)
+
+  function onChange(e) {
+    date = e.detail;
+  }
 </script>
 
+<!-- Props
+	/** Date value. It's `null` if no date is selected */
+	value: Date | null = null
+
+	/** Show a time picker with the specified precision */
+	timePrecision: 'minute' | 'second' | 'millisecond' | null = null
+
+	/** The earliest year the user can select */
+	min = new Date(defaultDate.getFullYear() - 20, 0, 1)
+
+	/** The latest year the user can select */
+	max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
+
+  /** Wait with updating the date until a date is selected */
+	browseWithoutSelecting = false
+
+  /** Locale object for internationalization */
+  locale: Locale = {}
+ -->
+<!-- input that shows datepicker (wraps the DatePicker for you) -->
 <DateInput bind:value={date} />
+  
+<!-- standalone date picker/calendar so you can do your own thing -->
+<DatePicker 
+  value={value}
+  min={minDate}
+  max={maxDate}
+  on:change={onChange}
+/>
+
+<!-- you can also bind value but a note that this will fire a change when the component mounts -->
+<DatePicker 
+  bind:value={value}
+  min={minDate}
+  max={maxDate}
+/>
 ```
 
 Check the [docs](https://date-picker-svelte.kasper.space/docs) to learn more
